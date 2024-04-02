@@ -1,16 +1,13 @@
-// Import necessary modules
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
-// Import routes
 const authRoutes = require('./routes/authRoutes');
-// const financeRoutes = require('./routes/finance');
 
-// Initialize Express app
 const app = express();
 
 // Middleware
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json());
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost/financeTrackerDB', {
@@ -20,9 +17,16 @@ mongoose.connect('mongodb://localhost/financeTrackerDB', {
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB:', err));
 
-// Routes
-app.use('/api/auth', authRoutes); // Authentication routes
-// app.use('/api/finance', financeRoutes);
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+
+// Using authRoutes
+app.use('/api/auth', authRoutes);
+
+// Serve the frontend application for any other requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+});
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
@@ -31,7 +35,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

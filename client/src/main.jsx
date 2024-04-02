@@ -1,11 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import ReactDOM from 'react-dom';
+import Nav from './components/Nav.jsx';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import App from './App.jsx';
+import SignUpPage from './pages/SignupPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css'
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Render the application using ReactDOM.render
+ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   </React.StrictMode>,
-)
+  document.getElementById('root')
+);

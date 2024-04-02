@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const secretKey = 'your-secret-key';
 
 // Function to generate JWT token
-// function generateToken(payload) {
-//   return jwt.sign(payload, secretKey, { expiresIn: '1h' });
-// }
+function generateToken(payload) {
+  return jwt.sign(payload, secretKey, { expiresIn: '1h' });
+}
 
-// module.exports = { generateToken };
+module.exports = { generateToken };
